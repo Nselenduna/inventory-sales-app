@@ -78,7 +78,7 @@ export default function SaleDetailPage() {
         .toArray();
       
       // Get the item IDs and quantities to restore stock
-      const itemUpdates = [];
+      const itemUpdates: { id: number; quantity: number }[] = [];
       for (const saleItem of saleItems) {
         const item = await db.items.get(parseInt(saleItem.itemId));
         if (item) {
