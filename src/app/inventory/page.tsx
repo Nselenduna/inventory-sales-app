@@ -48,21 +48,7 @@ export default function InventoryPage() {
   };
   const { data: inventoryData, isLoading, error } = useAsyncData(fetchInventory, [searchParams]);
 
-  if (error) {
-    return (
-      <AppShell>
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center py-12">
-              <p className="text-lg text-red-600 dark:text-red-400">An error occurred: {error.message || String(error)}</p>
-            </div>
-          </div>
-        </div>
-      </AppShell>
-    );
-  }
-
-  // Filter and sort items when dependencies change
+  // Filter and sort items when dependencies change - MOVED BEFORE EARLY RETURN
   useEffect(() => {
     // Apply filters and search term
     let result = [...inventoryData?.allItems || []];
@@ -119,6 +105,20 @@ export default function InventoryPage() {
     
     setFilteredItems(result);
   }, [inventoryData?.allItems, searchTerm, filter, sortBy, lowStockThreshold]);
+
+  if (error) {
+    return (
+      <AppShell>
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center py-12">
+              <p className="text-lg text-red-600 dark:text-red-400">An error occurred: {error.message || String(error)}</p>
+            </div>
+          </div>
+        </div>
+      </AppShell>
+    );
+  }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
