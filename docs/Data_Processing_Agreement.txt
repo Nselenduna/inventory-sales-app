@@ -1,0 +1,32 @@
+Inventory-sales-app Data Processing Agreement (DPA)
+
+Effective Date: [Insert Date]
+
+1. Parties
+This DPA is between [Customer Name] (Controller) and Inventory-sales-app (Processor).
+
+2. Scope
+Inventory-sales-app processes personal data on behalf of the Controller for inventory and sales tracking.
+
+3. Duration
+This DPA remains in effect for the duration of the SaaS agreement.
+
+4. Obligations of Processor
+- Process data only on documented instructions
+- Implement appropriate security measures
+- Assist with data subject rights
+- Notify Controller of data breaches
+
+5. Subprocessors
+Inventory-sales-app may use subprocessors (e.g. Supabase, Firebase) with prior notice.
+
+6. International Transfers
+Inventory-sales-app will use approved safeguards for any data transfers outside the UK.
+
+7. Audit Rights
+Controller may request evidence of compliance. Inventory-sales-app will provide audit summaries.
+
+8. Termination
+Upon termination, Inventory-sales-app will delete or return personal data within 30 days.
+
+Contact: dpo@scanstock.co.uk

@@ -1,0 +1,29 @@
+Inventory-sales-app Terms of Service
+
+Effective Date: [Insert Date]
+
+1. Introduction
+Inventory-sales-app is a mobile-first inventory and sales tracking platform for small UK retailers. By using our services, you agree to these Terms.
+
+2. Use of Service
+You may use Inventory-sales-app only for lawful business purposes. You must not misuse the platform or attempt to access it in unauthorized ways.
+
+3. Account & Access
+You are responsible for maintaining the confidentiality of your login credentials. You agree not to share access with unauthorized users.
+
+4. Subscription & Billing
+Inventory-sales-app offers tiered pricing. Charges are billed monthly in GBP. You may cancel at any time, but refunds are not guaranteed.
+
+5. Data & Privacy
+We process your data in accordance with our Privacy Policy. You retain ownership of your inventory and sales data.
+
+6. Service Availability
+We aim for 99.9% uptime. Planned maintenance will be announced in advance. We are not liable for outages beyond our control.
+
+7. Termination
+We may suspend or terminate your account for breach of these Terms. You may export your data before termination.
+
+8. Governing Law
+These Terms are governed by the laws of England and Wales.
+
+Contact: legal@scanstock.co.uk

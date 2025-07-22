@@ -1,0 +1,36 @@
+Inventory-sales-app Privacy Policy
+
+Effective Date: [Insert Date]
+
+1. Who We Are
+Inventory-sales-app is operated by [Your Company Name], based in the UK. We are committed to protecting your privacy.
+
+2. Data We Collect
+- Account info (email, name)
+- Inventory and sales data
+- Device and usage logs
+
+3. How We Use Your Data
+- To provide and improve our services
+- To send alerts and summaries
+- To comply with legal obligations
+
+4. Legal Basis
+We process data under UK GDPR based on contract performance and legitimate interest.
+
+5. Data Sharing
+We do not sell your data. We may share it with trusted processors (e.g. cloud hosting) under strict agreements.
+
+6. Your Rights
+You may access, correct, or delete your data. Contact us at privacy@scanstock.co.uk.
+
+7. Data Retention
+We retain data for the duration of your account and up to 30 days after termination.
+
+8. Security
+We use encryption, access controls, and regular audits to protect your data.
+
+9. Changes
+We may update this policy. You’ll be notified of significant changes.
+
+Contact: privacy@scanstock.co.uk

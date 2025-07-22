@@ -1,4 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inventory & Sales Manager PWA
+
+A mobile-first Progressive Web App for managing inventory and sales with QR/barcode scanning functionality.
+
+## Features Implemented
+
+- **Authentication & User Roles**
+  - Supabase integration for authentication
+  - Role-based access (owner and staff accounts)
+  - User profile management
+
+- **Offline Data Persistence**
+  - IndexedDB (via Dexie.js) for local storage
+  - Background sync with Supabase when connection is restored
+  - Full offline functionality for critical operations
+
+- **QR/Barcode Scanning**
+  - Camera integration for scanning product codes
+  - Support for multiple barcode formats
+  - Toggle between inventory and sales scan modes
+
+- **PWA Capabilities**
+  - Installable on mobile and desktop devices
+  - Offline functionality
+  - Service worker for caching and background sync
+
+- **Dashboard**
+  - Overview of key metrics (total items, low stock, sales)
+  - Quick access to common actions
+
+- **Responsive UI**
+  - Mobile-first design approach
+  - Dark/light mode support
 
 ## Getting Started
 
@@ -16,21 +48,52 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## App Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/*` - Next.js App Router components and pages
+- `src/components/*` - Reusable React components
+- `src/lib/*` - Utility functions, database setup, and services
+- `src/context/*` - React context providers
+- `public/*` - Static assets and PWA manifest
 
-## Learn More
+## Key Components
 
-To learn more about Next.js, take a look at the following resources:
+- **Authentication Context** (`src/context/AuthContext.tsx`) - Manages user authentication state
+- **Database** (`src/lib/db.ts`) - Dexie.js setup for IndexedDB
+- **Sync Service** (`src/lib/sync.ts`) - Handles data synchronization with Supabase
+- **Scanner** (`src/components/scanner/Scanner.tsx`) - QR/barcode scanning component
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Features to Implement
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Inventory Management Module
+  - Item listing, filtering, and search
+  - Item detail view and edit form
+  - Stock history and audit log
 
-## Deploy on Vercel
+- Sales Module
+  - Shopping cart functionality
+  - Sales history and receipts
+  - Customer management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Reports & Analytics
+  - Sales trends and charts
+  - Inventory valuation and turnover
+  - Export functionality
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- User Management
+  - Staff permissions and access control
+  - Activity logging
+
+## Environment Setup
+
+Create a `.env.local` file with your Supabase credentials:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_JWT_SECRET=your_jwt_secret
+```
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

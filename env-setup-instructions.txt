@@ -1,0 +1,21 @@
+ENVIRONMENT SETUP REQUIRED
+
+Your app is missing environment variables which is causing the authentication errors.
+
+To fix this:
+
+1. Create a file named ".env.local" in your project root
+2. Add these variables (get values from your Supabase dashboard):
+
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url_here
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your_supabase_anon_key_here
+
+Example:
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxxxxxxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+3. Restart your development server after creating the file
+
+Get your Supabase credentials from: https://app.supabase.com
+- Go to your project settings > API
+- Copy the Project URL and Project API Key (anon public) 
