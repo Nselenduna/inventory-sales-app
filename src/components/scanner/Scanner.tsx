@@ -76,7 +76,6 @@ export default function Scanner({
           qrbox: { width: qrbox, height: qrbox },
           aspectRatio,
           disableFlip,
-          formatsToSupport: ["QR_CODE", "EAN_13", "CODE_128", "UPC_A", "UPC_E", "EAN_8"],
           experimentalFeatures: {
             useBarCodeDetectorIfSupported: true
           }
