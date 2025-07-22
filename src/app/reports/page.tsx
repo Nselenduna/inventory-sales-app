@@ -209,7 +209,7 @@ export default function ReportsPage() {
 
   // Function to generate a simple sales chart
   const generateSalesChart = () => {
-    if (reportData?.salesByDay.length === 0) return null;
+    if (!reportData?.salesByDay || reportData.salesByDay.length === 0) return null;
     
     const maxRevenue = Math.max(...reportData.salesByDay.map(day => day.revenue));
     const chartHeight = 200;
