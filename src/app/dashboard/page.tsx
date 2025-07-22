@@ -223,7 +223,7 @@ export default function DashboardPage() {
                         </dt>
                         <dd>
                           <div className="text-lg font-medium text-gray-900 dark:text-white">
-                            {formatCurrency(stats?.totalRevenueToday, stats?.currency)}
+                            {formatCurrency(stats?.totalRevenueToday || 0, stats?.currency)}
                           </div>
                         </dd>
                       </dl>
