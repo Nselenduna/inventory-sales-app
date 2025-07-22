@@ -48,6 +48,9 @@ export default function SaleDetailPage() {
   };
   const { data: saleData, isLoading, error } = useAsyncData(fetchSaleDetails, [id]);
 
+  const [sale, setSale] = useState<any>(null);
+  const [saleItems, setSaleItems] = useState<any[]>([]);
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
