@@ -194,7 +194,7 @@ export const syncStockMovements = async () => {
       try {
         // If the movement has a supabaseId, update it
         if (movement.supabaseId) {
-          const { error } = await supabase
+          const { error } = await supabase!
             .from('stock_movements')
             .update({
               item_id: movement.itemId,
