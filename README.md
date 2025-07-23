@@ -1,99 +1,64 @@
-# Inventory & Sales Manager PWA
+# Inventory & Sales Management App
 
-A mobile-first Progressive Web App for managing inventory and sales with QR/barcode scanning functionality.
+A modern, offline-capable inventory and sales management application built with Next.js, Supabase, and IndexedDB.
 
-## Features Implemented
+## Features
 
-- **Authentication & User Roles**
-  - Supabase integration for authentication
-  - Role-based access (owner and staff accounts)
-  - User profile management
+- **Offline-first design** - Works without internet connection
+- **Real-time sync** - Automatically syncs data when online
+- **Barcode scanning** - Scan products with your device camera
+- **Sales tracking** - Record and track sales transactions
+- **Inventory management** - Manage product stock levels
+- **User authentication** - Secure login with Supabase Auth
+- **PWA support** - Install as a mobile app
 
-- **Offline Data Persistence**
-  - IndexedDB (via Dexie.js) for local storage
-  - Background sync with Supabase when connection is restored
-  - Full offline functionality for critical operations
+## Tech Stack
 
-- **QR/Barcode Scanning**
-  - Camera integration for scanning product codes
-  - Support for multiple barcode formats
-  - Toggle between inventory and sales scan modes
-
-- **PWA Capabilities**
-  - Installable on mobile and desktop devices
-  - Offline functionality
-  - Service worker for caching and background sync
-
-- **Dashboard**
-  - Overview of key metrics (total items, low stock, sales)
-  - Quick access to common actions
-
-- **Responsive UI**
-  - Mobile-first design approach
-  - Dark/light mode support
+- **Frontend**: Next.js 15, React, TypeScript
+- **Database**: Supabase (PostgreSQL)
+- **Local Storage**: IndexedDB (Dexie.js)
+- **Authentication**: Supabase Auth
+- **Styling**: Tailwind CSS
+- **PWA**: next-pwa
+- **Barcode Scanning**: html5-qrcode
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd inventory-sales-app
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Set up environment variables**
+   Create a `.env.local` file with your Supabase credentials:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your_supabase_anon_key
+   ```
 
-## App Structure
+4. **Set up Supabase database**
+   - Create a new Supabase project
+   - Run the SQL script from `supabase-setup.sql` in your Supabase SQL Editor
 
-- `src/app/*` - Next.js App Router components and pages
-- `src/components/*` - Reusable React components
-- `src/lib/*` - Utility functions, database setup, and services
-- `src/context/*` - React context providers
-- `public/*` - Static assets and PWA manifest
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-## Key Components
+## Deployment
 
-- **Authentication Context** (`src/context/AuthContext.tsx`) - Manages user authentication state
-- **Database** (`src/lib/db.ts`) - Dexie.js setup for IndexedDB
-- **Sync Service** (`src/lib/sync.ts`) - Handles data synchronization with Supabase
-- **Scanner** (`src/components/scanner/Scanner.tsx`) - QR/barcode scanning component
-
-## Features to Implement
-
-- Inventory Management Module
-  - Item listing, filtering, and search
-  - Item detail view and edit form
-  - Stock history and audit log
-
-- Sales Module
-  - Shopping cart functionality
-  - Sales history and receipts
-  - Customer management
-
-- Reports & Analytics
-  - Sales trends and charts
-  - Inventory valuation and turnover
-  - Export functionality
-
-- User Management
-  - Staff permissions and access control
-  - Activity logging
-
-## Environment Setup
-
-Create a `.env.local` file with your Supabase credentials:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_JWT_SECRET=your_jwt_secret
-```
+The app is configured for deployment on Vercel with automatic builds from the main branch.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+MIT License
+
+---
+
+*Last updated: 2024 - Build fix applied for Supabase configuration handling*
