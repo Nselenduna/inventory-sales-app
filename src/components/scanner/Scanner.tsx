@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Html5Qrcode, Html5QrcodeScanner, Html5QrcodeScannerState, Html5QrcodeScanType, Html5QrcodeResult } from 'html5-qrcode';
+import { Html5Qrcode, Html5QrcodeScannerState, Html5QrcodeResult } from 'html5-qrcode';
 
 interface ScannerProps {
   fps?: number;
   qrbox?: number;
   aspectRatio?: number;
   disableFlip?: boolean;
-  verbose?: boolean;
   onScanSuccess: (decodedText: string, decodedResult: Html5QrcodeResult) => void;
   onScanFailure?: (error: string) => void;
 }
@@ -18,7 +17,6 @@ export default function Scanner({
   qrbox = 250,
   aspectRatio = 1.0,
   disableFlip = false,
-  verbose = false,
   onScanSuccess,
   onScanFailure
 }: ScannerProps) {
@@ -75,10 +73,7 @@ export default function Scanner({
           fps,
           qrbox: { width: qrbox, height: qrbox },
           aspectRatio,
-          disableFlip,
-          experimentalFeatures: {
-            useBarCodeDetectorIfSupported: true
-          }
+          disableFlip
         },
         (decodedText, decodedResult) => {
           onScanSuccess(decodedText, decodedResult);
