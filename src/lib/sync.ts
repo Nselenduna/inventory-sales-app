@@ -1,10 +1,16 @@
 import db, { Item, Sale, StockMovement } from './db';
-import { supabase } from './supabase';
+import { supabase, isSupabaseConfigured } from './supabase';
 import { networkStatus } from './network';
 
 // Function to sync pending items to Supabase
 export const syncItems = async () => {
   try {
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured, skipping sync');
+      return;
+    }
+
     // Get all items with pending sync status
     const pendingItems = await db.items
       .where('syncStatus')
@@ -18,7 +24,7 @@ export const syncItems = async () => {
       try {
         // If the item has a supabaseId, update it
         if (item.supabaseId) {
-          const { error } = await supabase
+          const { error } = await supabase!
             .from('items')
             .update({
               name: item.name,
@@ -38,7 +44,7 @@ export const syncItems = async () => {
           }
         } else {
           // If the item doesn't have a supabaseId, insert it
-          const { data, error } = await supabase
+          const { data, error } = await supabase!
             .from('items')
             .insert({
               name: item.name,
@@ -74,6 +80,12 @@ export const syncItems = async () => {
 // Function to sync pending sales to Supabase
 export const syncSales = async () => {
   try {
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured, skipping sync');
+      return;
+    }
+
     // Get all sales with pending sync status
     const pendingSales = await db.sales
       .where('syncStatus')
@@ -93,7 +105,7 @@ export const syncSales = async () => {
 
         // If the sale has a supabaseId, update it
         if (sale.supabaseId) {
-          const { error } = await supabase
+          const { error } = await supabase!
             .from('sales')
             .update({
               timestamp: sale.timestamp.toISOString(),
@@ -106,7 +118,7 @@ export const syncSales = async () => {
           if (!error) {
             // Update sale items if needed
             for (const saleItem of saleItems) {
-              await supabase
+              await supabase!
                 .from('sale_items')
                 .upsert({
                   sale_id: sale.supabaseId,
@@ -120,7 +132,7 @@ export const syncSales = async () => {
           }
         } else {
           // If the sale doesn't have a supabaseId, insert it
-          const { data, error } = await supabase
+          const { data, error } = await supabase!
             .from('sales')
             .insert({
               timestamp: sale.timestamp.toISOString(),
@@ -134,7 +146,7 @@ export const syncSales = async () => {
           if (!error && data) {
             // Insert sale items
             for (const saleItem of saleItems) {
-              await supabase
+              await supabase!
                 .from('sale_items')
                 .insert({
                   sale_id: data.id,
@@ -163,6 +175,12 @@ export const syncSales = async () => {
 // Function to sync stock movements
 export const syncStockMovements = async () => {
   try {
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured, skipping sync');
+      return;
+    }
+
     // Get all stock movements with pending sync status
     const pendingMovements = await db.stockMovements
       .where('syncStatus')
@@ -192,7 +210,7 @@ export const syncStockMovements = async () => {
           }
         } else {
           // If the movement doesn't have a supabaseId, insert it
-          const { data, error } = await supabase
+          const { data, error } = await supabase!
             .from('stock_movements')
             .insert({
               item_id: movement.itemId,
@@ -224,8 +242,14 @@ export const syncStockMovements = async () => {
 // Function to pull latest data from Supabase
 export const pullFromSupabase = async () => {
   try {
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured, skipping pull');
+      return;
+    }
+
     // Get items from Supabase
-    const { data: items, error: itemsError } = await supabase
+    const { data: items, error: itemsError } = await supabase!
       .from('items')
       .select('*');
     
