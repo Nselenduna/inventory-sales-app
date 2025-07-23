@@ -292,8 +292,8 @@ export const registerBackgroundSync = () => {
   if ('serviceWorker' in navigator && 'SyncManager' in window) {
     navigator.serviceWorker.ready
       .then(registration => {
-        // Register background sync
-        return registration.sync.register('sync-data');
+        // Register background sync with type assertion
+        return (registration as any).sync?.register('sync-data');
       })
       .catch(err => {
         console.error('Background sync registration failed:', err);
