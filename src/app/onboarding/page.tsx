@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import db from '@/lib/db';
 import Image from 'next/image';
 
@@ -36,9 +36,16 @@ export default function OnboardingPage() {
     setError(null); // Reset error state
     
     try {
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured()) {
+        setError('Database connection not configured. Please check your environment settings.');
+        setLoading(false);
+        return;
+      }
+
       // Try to validate Supabase connection first
       try {
-        const { error: connectionError } = await supabase.from('shop_settings').select('count').limit(1);
+        const { error: connectionError } = await supabase!.from('shop_settings').select('count').limit(1);
         if (connectionError) {
           throw new Error(`Supabase connection error: ${connectionError.message}`);
         }
@@ -50,7 +57,7 @@ export default function OnboardingPage() {
       }
       
       // Create shop settings in Supabase
-      const { data: shopData, error: shopError } = await supabase
+      const { data: shopData, error: shopError } = await supabase!
         .from('shop_settings')
         .insert({
           name: shopName,

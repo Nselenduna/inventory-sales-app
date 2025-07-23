@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 
 // Get the Supabase URL from environment or use default
@@ -42,13 +42,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Get initial session
     const getSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        if (!isSupabaseConfigured()) {
+          console.warn('Supabase not configured');
+          setIsLoading(false);
+          return;
+        }
+
+        const { data: { session } } = await supabase!.auth.getSession();
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
           // Fetch user role from profiles table
-          const { data: profile } = await supabase
+          const { data: profile } = await supabase!
             .from('profiles')
             .select('role')
             .eq('id', session.user.id)
@@ -66,7 +72,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     getSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    if (!isSupabaseConfigured()) {
+      setIsLoading(false);
+      return;
+    }
+
+    const { data: { subscription } } = supabase!.auth.onAuthStateChange(
       async (_event: string, session: Session | null) => {
         setSession(session);
         setUser(session?.user ?? null);
@@ -74,7 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (session?.user) {
           // Fetch user role from profiles table
           try {
-            const { data: profile } = await supabase
+            const { data: profile } = await supabase!
               .from('profiles')
               .select('role')
               .eq('id', session.user.id)
@@ -109,15 +120,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       
       console.log('User is online, attempting sign in...');
+      
+      if (!isSupabaseConfigured()) {
+        setAuthError('Database connection not configured. Please check your environment settings.');
+        return { error: { message: 'Database connection not configured.' } };
+      }
+      
       console.log('Supabase client available:', !!supabase);
-      console.log('Supabase auth available:', !!supabase.auth);
+      console.log('Supabase auth available:', !!supabase!.auth);
       
       // Retry logic for transient errors (up to 2 retries)
       let lastError = null;
       for (let attempt = 0; attempt < 3; attempt++) {
         try {
           console.log(`Sign in attempt ${attempt + 1}/3`);
-          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          const { data, error } = await supabase!.auth.signInWithPassword({ email, password });
           console.log('Sign in response:', { data: !!data, error: !!error });
           
           if (!error) {
@@ -157,11 +174,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string, role: UserRole) => {
     setAuthError(null);
     try {
-      const { error, data } = await supabase.auth.signUp({ email, password });
+      if (!isSupabaseConfigured()) {
+        setAuthError('Database connection not configured. Please check your environment settings.');
+        return { error: { message: 'Database connection not configured.' } };
+      }
+
+      const { error, data } = await supabase!.auth.signUp({ email, password });
       
       if (!error && data.user) {
         // Create a profile with role
-        await supabase.from('profiles').insert({
+        await supabase!.from('profiles').insert({
           id: data.user.id,
           email,
           role,
@@ -187,12 +209,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(null);
       setUserRole(null);
 
-      // Then sign out from Supabase
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        console.error('Error signing out:', error);
-        throw error;
+      // Then sign out from Supabase if configured
+      if (isSupabaseConfigured()) {
+        const { error } = await supabase!.auth.signOut();
+        
+        if (error) {
+          console.error('Error signing out:', error);
+          throw error;
+        }
       }
       
       // Redirect to login page

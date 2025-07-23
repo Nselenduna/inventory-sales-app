@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export default function TestSupabasePage() {
   const [testResults, setTestResults] = useState<string[]>([]);
@@ -24,10 +24,18 @@ export default function TestSupabasePage() {
       addResult(`Key set: ${!!key}`);
       if (url) addResult(`URL: ${url.substring(0, 30)}...`);
 
-      // Test 2: Supabase auth endpoint
+      // Test 2: Check if Supabase is configured
+      addResult('Checking Supabase configuration...');
+      if (!isSupabaseConfigured()) {
+        addResult('ERROR: Supabase not configured - missing URL or key');
+        return;
+      }
+      addResult('Supabase configuration OK');
+
+      // Test 3: Supabase auth endpoint
       addResult('Testing Supabase auth...');
       try {
-        const { data, error } = await supabase.auth.getSession();
+        const { data, error } = await supabase!.auth.getSession();
         if (error) {
           addResult(`Auth test failed: ${error.message}`);
         } else {
@@ -37,10 +45,10 @@ export default function TestSupabasePage() {
         addResult(`Auth test error: ${error}`);
       }
 
-      // Test 3: Try to sign up (this will test the actual auth functionality)
+      // Test 4: Try to sign up (this will test the actual auth functionality)
       addResult('Testing signup functionality...');
       try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabase!.auth.signUp({
           email: 'test@example.com',
           password: 'testpassword123'
         });
